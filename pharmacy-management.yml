@@ -1,0 +1,415 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: Pharmacy management API
+  description: |
+    _Api for managing a pharmacy._
+
+servers:
+  - url: 'https://api-dev.pharmacy.mg'
+
+security:
+  - BearerAuth: [ ]
+
+paths:
+  '/whoami':
+    get:
+      tags:
+        - Security
+      summary: Who am I? Tells you who you are.
+      operationId: whoami
+      responses:
+        '200':
+          description: Who you are
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Whoami'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/ping':
+    get:
+      tags:
+        - Security
+      summary: pong
+      operationId: ping
+      responses:
+        '200':
+          description: pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/drugs':
+    get:
+      tags:
+        - Drug
+      summary: Get list of drugs
+      operationId: GetDrugs
+      responses:
+        '200':
+          description: List of drugs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drug'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Drug
+      summary: Create new drugs or update existing drugs
+      description: Update drugs when `id` are provided, create them otherwise.
+      operationId: createOrUpdateDrugs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateDrug'
+      responses:
+        '200':
+          description: The created or updated students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Drug'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'       
+  '/drugs/{id}':
+    get:
+      tags:
+        - Drug
+      summary: Get drug by identifier
+      parameters:
+       - name: id
+         in: path
+         required: true
+         schema:
+          type: string
+      operationId: getDrugById
+      responses:
+          '200':
+            description: The identified drug
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Drug'
+          '400':
+            $ref: '#/components/responses/400'
+          '403':
+            $ref: '#/components/responses/403'
+          '404':
+            $ref: '#/components/responses/404'
+          '429':
+            $ref: '#/components/responses/429'
+          '500':
+            $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Drug
+      summary: Delete drug by id
+      description: Remove a specific drug from the list
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: number
+            example: 12
+          required: true
+      responses:
+        200:
+          description: Drug deleted
+          content:
+            text/plain:
+              example: Drug deleted successfully
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:   
+                 $ref: '#/components/responses/400'
+  /drugs/treatment/{id_treatment}/admission/{id_admission}:
+    get:
+      tags:
+        - Classification
+      summary: Get drugs according to their treatment and their admission
+      parameters:
+        - name: id_admission
+          in: path
+          required: true
+          schema:
+            type: number
+        - name: id_treatment
+          in: path
+          required: true
+          schema:
+            type: number
+      operationId: getDrugTreatmentByAdmission
+      responses:
+        '200':
+          description: List of drugs according to their treatment and their admission
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drug'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  /drugs/treatment/{id_treatment}:
+    get:
+      tags:
+        - Classification
+      summary: Get drugs according to their treatment
+      parameters:
+        - name: id_treatment
+          in: path
+          required: true
+          schema:
+            type: number
+      operationId: getDrugByTreatment
+      responses:
+        '200':
+          description: List of Drug according to their treatment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drug'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  /drugs/compartment/{id_compartment}:
+    get:
+      tags:
+        - Classification
+      summary: Get the list of medicines in a compartment
+      parameters:
+        - name: id_compartment
+          in: path
+          required: true
+          schema:
+            type: number
+      operationId: getDrugByCompartment
+      responses:
+        '200':
+          description: List of Drug according to their treatment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drug'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  responses:
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestException'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthorizedException'
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResourceNotFoundException'
+    '429':
+      description: Too many requests to the API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TooManyRequestsException'
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerException'
+  schemas:
+    Whoami:
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+          enum:
+            - CUSTOMER
+            - MANAGER
+    Drug:
+      properties:
+        id_drug:
+          type: number
+          example: 1
+        drug_name:
+          type: string
+          example: "azithromycine"
+        treatment:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Treatment'
+        admission:
+          $ref: '#/components/schemas/Admission'
+        compartment:
+          $ref: '#/components/schemas/Compartment'
+        quantity:
+          type: number
+          example: 500
+    CreateDrug:
+      properties:
+        id_drug:
+          type: number
+          example: 1
+        drug_name:
+          type: string
+          example: "azithromycine"
+        id_admission:
+          type: number
+          example: 1
+        quantity:
+          type: number
+          example: 500
+        id_treatment:
+          type: number
+          example: 1
+    Treatment:
+      properties:
+        id_treatment:
+          type: number
+          example: 1
+        treatment_name:
+          type: string
+          example: "headache"
+    Admission:
+      properties:
+        id_admission:
+          type: number
+          example: 1
+        admission_name:
+          type: string
+          example: "oral"
+    Compartment:
+      properties:
+        id_compartment:
+          type: number
+          example: 1
+        compartment_name:
+          type: string
+          example: "C1"
+    Exception:
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+    BadRequestException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: BadRequestException
+        message: Bad request
+    NotAuthorizedException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: NotAuthorizedException
+        message: Not authorized
+    ResourceNotFoundException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: ResourceNotFoundException
+        message: Resource of type <T> identified by <I> not found
+    TooManyRequestsException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: TooManyRequestsException
+        message: Too many requests
+    InternalServerException:
+      allOf:
+        - $ref: '#/components/schemas/Exception'
+      example:
+        type: InternalServerException
+        message: Unexpected error
