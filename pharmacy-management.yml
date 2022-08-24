@@ -4,7 +4,6 @@ info:
   title: Pharmacy management API
   description: |
     _Api for managing a pharmacy._
-
 servers:
   - url: 'https://api-dev.pharmacy.mg'
 
@@ -59,21 +58,21 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  '/drugs':
+  '/admission':
     get:
       tags:
-        - Drug
-      summary: Get list of drugs
-      operationId: GetDrugs
+        - Admission
+      summary: Get list of admission
+      operationId: GetAdmission
       responses:
         '200':
-          description: List of drugs
+          description: List of admissions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Drug'
+                  $ref: '#/components/schemas/Admission'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -86,10 +85,10 @@ paths:
           $ref: '#/components/responses/500'
     put:
       tags:
-        - Drug
-      summary: Create new drugs or update existing drugs
-      description: Update drugs when `id` are provided, create them otherwise.
-      operationId: createOrUpdateDrugs
+        - Admission
+      summary: Create new admission or update existing admission
+      description: Update admission when `id` are provided, create them otherwise.
+      operationId: createOrUpdateAdmission
       requestBody:
         required: true
         content:
@@ -97,17 +96,266 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/CreateDrug'
+                $ref: '#/components/schemas/Admission'
       responses:
         '200':
-          description: The created or updated students
+          description: The created or updated admissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Admission'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/admission/{id}':
+    delete:
+      tags:
+        - Admission
+      summary: Delete admission by id
+      description: Remove a specific admission from the list
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: number
+            example: 12
+          required: true
+      responses:
+        200:
+          description: Admission deleted
+          content:
+            text/plain:
+              example: Admission deleted successfully
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:   
+                 $ref: '#/components/responses/400'
+  '/treatment':
+    get:
+      tags:
+        - Treatment
+      summary: Get list of treatment
+      operationId: GetTreatment
+      responses:
+        '200':
+          description: List of treatments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Treatment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Treatment
+      summary: Create new treatment or update existing treatment
+      description: Update treatment when `id` are provided, create them otherwise.
+      operationId: createOrUpdateTreatment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Treatment'
+      responses:
+        '200':
+          description: The created or updated treatments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Treatment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/treatment/{id}':
+    delete:
+      tags:
+        - Treatment
+      summary: Delete treatment by id
+      description: Remove a specific treatment from the list
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: number
+            example: 12
+          required: true
+      responses:
+        200:
+          description: Treatment deleted
+          content:
+            text/plain:
+              example: Treatment deleted successfully
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:   
+                 $ref: '#/components/responses/400'
+  '/compartment':
+    get:
+      tags:
+        - Compartment
+      summary: Get list of compartment
+      operationId: GetCompartments
+      responses:
+        '200':
+          description: List of compartments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compartment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Compartment
+      summary: Create new compartment or update existing compartment
+      description: Update compartment when `id` are provided, create them otherwise.
+      operationId: createOrUpdateCompartment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Compartment'
+      responses:
+        '200':
+          description: The created or updated compartments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compartment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/compartment/{id}':
+    delete:
+      tags:
+        - Compartment
+      summary: Delete compartment by id
+      description: Remove a specific compartment from the list
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: number
+            example: 12
+          required: true
+      responses:
+        200:
+          description: Compartment deleted
+          content:
+            text/plain:
+              example: Compartment deleted successfully
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:   
+                 $ref: '#/components/responses/400'
+  '/medicines':
+    get:
+      tags:
+        - Medicine
+      summary: Get list of medicines
+      operationId: GetMedicines
+      responses:
+        '200':
+          description: List of medicines
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medicine'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Medicine
+      summary: Create new medicines or update existing medicines
+      description: Update medicines when `id` are provided, create them otherwise.
+      operationId: createOrUpdateMedicine
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateMedicine'
+      responses:
+        '200':
+          description: The created or updated medicines
           content:
             application/json:
               schema:
                 type: array
                 items:
                   allOf:
-                    - $ref: '#/components/schemas/Drug'
+                    - $ref: '#/components/schemas/Medicine'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -118,25 +366,25 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'       
-  '/drugs/{id}':
+  '/medicines/{id}':
     get:
       tags:
-        - Drug
-      summary: Get drug by identifier
+        - Medicine
+      summary: Get medicine by identifier
       parameters:
        - name: id
          in: path
          required: true
          schema:
           type: string
-      operationId: getDrugById
+      operationId: getMedicineById
       responses:
           '200':
-            description: The identified drug
+            description: The identified medicine
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Drug'
+                  $ref: '#/components/schemas/Medicine'
           '400':
             $ref: '#/components/responses/400'
           '403':
@@ -149,9 +397,9 @@ paths:
             $ref: '#/components/responses/500'
     delete:
       tags:
-        - Drug
-      summary: Delete drug by id
-      description: Remove a specific drug from the list
+        - Medicine
+      summary: Delete medicine by id
+      description: Remove a specific medicine from the list
       parameters:
         - name: id
           in: path
@@ -161,21 +409,21 @@ paths:
           required: true
       responses:
         200:
-          description: Drug deleted
+          description: Medicine deleted
           content:
             text/plain:
-              example: Drug deleted successfully
+              example: Medicine deleted successfully
         400:
           description: Bad request
           content:
             application/json:
               schema:   
                  $ref: '#/components/responses/400'
-  /drugs/treatment/{id_treatment}/admission/{id_admission}:
+  /medicines/treatment/{id_treatment}/admission/{id_admission}:
     get:
       tags:
         - Classification
-      summary: Get drugs according to their treatment and their admission
+      summary: Get medicine according to their treatment and their admission
       parameters:
         - name: id_admission
           in: path
@@ -187,16 +435,16 @@ paths:
           required: true
           schema:
             type: number
-      operationId: getDrugTreatmentByAdmission
+      operationId: getMedicineTreatmentByAdmission
       responses:
         '200':
-          description: List of drugs according to their treatment and their admission
+          description: List of medicines according to their treatment and their admission
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Drug'
+                  $ref: '#/components/schemas/Medicine'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -207,27 +455,27 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /drugs/treatment/{id_treatment}:
+  /medicines/treatment/{id_treatment}:
     get:
       tags:
         - Classification
-      summary: Get drugs according to their treatment
+      summary: Get medicines according to their treatment
       parameters:
         - name: id_treatment
           in: path
           required: true
           schema:
             type: number
-      operationId: getDrugByTreatment
+      operationId: getMedicineByTreatment
       responses:
         '200':
-          description: List of Drug according to their treatment
+          description: List of Medicine according to their treatment
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Drug'
+                  $ref: '#/components/schemas/Medicine'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -238,7 +486,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  /drugs/compartment/{id_compartment}:
+  /medicines/compartment/{id_compartment}:
     get:
       tags:
         - Classification
@@ -249,16 +497,16 @@ paths:
           required: true
           schema:
             type: number
-      operationId: getDrugByCompartment
+      operationId: getMedicineByCompartment
       responses:
         '200':
-          description: List of Drug according to their treatment
+          description: List of Medicine according to their treatment
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Drug'
+                  $ref: '#/components/schemas/Medicine'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -316,7 +564,7 @@ components:
           enum:
             - CUSTOMER
             - MANAGER
-    Drug:
+    Medicine:
       properties:
         id_drug:
           type: number
@@ -335,7 +583,7 @@ components:
         quantity:
           type: number
           example: 500
-    CreateDrug:
+    CreateMedicine:
       properties:
         id_drug:
           type: number
