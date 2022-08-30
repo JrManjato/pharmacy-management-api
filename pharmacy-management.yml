@@ -83,12 +83,42 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Admission
+      summary: Add a new admission
+      operationId: addAdmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admission_name:
+                  type: string
+                  example: "string"
+      responses:
+        200:
+          description: Admission successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_admission:
+                    type: integer
+                    example: 10
+                  admission_name:
+                    type: string
+                    example: "string"
+        400:
+          $ref: "#/components/responses/400"
     put:
       tags:
         - Admission
-      summary: Create new admission or update existing admission
-      description: Update admission when `id` are provided, create them otherwise.
-      operationId: createOrUpdateAdmission
+      summary: Update existing admission
+      description: Update admission when `id` are provided.
+      operationId: UpdateAdmission
       requestBody:
         required: true
         content:
@@ -99,7 +129,7 @@ paths:
                 $ref: '#/components/schemas/Admission'
       responses:
         '200':
-          description: The created or updated admissions
+          description: The updated admissions
           content:
             application/json:
               schema:
@@ -166,12 +196,42 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Treatment
+      summary: Add a new treatment
+      operationId: addTreatment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                treatment_name:
+                  type: string
+                  example: "string"
+      responses:
+        200:
+          description: Treatment successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_treatment:
+                    type: integer
+                    example: 10
+                  treatment_name:
+                    type: string
+                    example: "string"
+        400:
+          $ref: "#/components/responses/400"
     put:
       tags:
         - Treatment
-      summary: Create new treatment or update existing treatment
-      description: Update treatment when `id` are provided, create them otherwise.
-      operationId: createOrUpdateTreatment
+      summary: Update existing treatment
+      description: Update treatment when `id` are provided.
+      operationId: UpdateTreatment
       requestBody:
         required: true
         content:
@@ -182,7 +242,7 @@ paths:
                 $ref: '#/components/schemas/Treatment'
       responses:
         '200':
-          description: The created or updated treatments
+          description: The updated treatments
           content:
             application/json:
               schema:
@@ -249,12 +309,42 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Compartment
+      summary: Add a new compartment
+      operationId: addCompartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                compartment_name:
+                  type: string
+                  example: "C10"
+      responses:
+        200:
+          description: Compartment successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_compartment:
+                    type: integer
+                    example: 10
+                  compartment_name:
+                    type: string
+                    example: "C10"
+        400:
+          $ref: "#/components/responses/400"
     put:
       tags:
         - Compartment
-      summary: Create new compartment or update existing compartment
-      description: Update compartment when `id` are provided, create them otherwise.
-      operationId: createOrUpdateCompartment
+      summary: Update existing compartment
+      description: Update compartment when `id` are provided.
+      operationId: UpdateCompartment
       requestBody:
         required: true
         content:
@@ -265,7 +355,7 @@ paths:
                 $ref: '#/components/schemas/Compartment'
       responses:
         '200':
-          description: The created or updated compartments
+          description: The Updated compartments
           content:
             application/json:
               schema:
@@ -332,12 +422,42 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Medicine
+      summary: Add a new medicine
+      operationId: addMedicine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medicine_name:
+                  type: string
+                  example: "string"
+      responses:
+        200:
+          description: Medicine successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_medicine:
+                    type: integer
+                    example: 110
+                  medicine_name:
+                    type: string
+                    example: "string"
+        400:
+          $ref: "#/components/responses/400"
     put:
       tags:
         - Medicine
-      summary: Create new medicines or update existing medicines
-      description: Update medicines when `id` are provided, create them otherwise.
-      operationId: createOrUpdateMedicine
+      summary: Update existing medicines
+      description: Update medicines when `id` are provided.
+      operationId: UpdateMedicine
       requestBody:
         required: true
         content:
@@ -348,7 +468,7 @@ paths:
                 $ref: '#/components/schemas/CreateMedicine'
       responses:
         '200':
-          description: The created or updated medicines
+          description: The updated medicines
           content:
             application/json:
               schema:
@@ -566,10 +686,10 @@ components:
             - MANAGER
     Medicine:
       properties:
-        id_drug:
+        id_medicine:
           type: number
           example: 1
-        drug_name:
+        medicine_name:
           type: string
           example: "azithromycine"
         treatment:
@@ -585,10 +705,10 @@ components:
           example: 500
     CreateMedicine:
       properties:
-        id_drug:
+        id_medicine:
           type: number
           example: 1
-        drug_name:
+        medicine_name:
           type: string
           example: "azithromycine"
         id_admission:
