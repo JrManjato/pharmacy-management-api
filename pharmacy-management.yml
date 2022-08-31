@@ -62,7 +62,7 @@ paths:
     get:
       tags:
         - Admission
-      summary: Get list of admission
+      summary: Get list of admissions
       operationId: GetAdmission
       responses:
         '200':
@@ -146,40 +146,15 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  '/admission/{id}':
-    delete:
-      tags:
-        - Admission
-      summary: Delete admission by id
-      description: Remove a specific admission from the list
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: number
-            example: 12
-          required: true
-      responses:
-        200:
-          description: Admission deleted
-          content:
-            text/plain:
-              example: Admission deleted successfully
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:   
-                 $ref: '#/components/responses/400'
   '/treatment':
     get:
       tags:
         - Treatment
-      summary: Get list of treatment
+      summary: Get list of treatments
       operationId: GetTreatment
       responses:
         '200':
-          description: List of treatments
+          description: The list of symptoms treated by the medicine.
           content:
             application/json:
               schema:
@@ -259,36 +234,11 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  '/treatment/{id}':
-    delete:
-      tags:
-        - Treatment
-      summary: Delete treatment by id
-      description: Remove a specific treatment from the list
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: number
-            example: 12
-          required: true
-      responses:
-        200:
-          description: Treatment deleted
-          content:
-            text/plain:
-              example: Treatment deleted successfully
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:   
-                 $ref: '#/components/responses/400'
   '/compartment':
     get:
       tags:
         - Compartment
-      summary: Get list of compartment
+      summary: Get list of compartments
       operationId: GetCompartments
       responses:
         '200':
