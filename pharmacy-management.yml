@@ -58,295 +58,6 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
-  '/admission':
-    get:
-      tags:
-        - Admission
-      summary: Get list of admissions
-      operationId: GetAdmission
-      responses:
-        '200':
-          description: List of admissions
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Admission'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-    post:
-      tags:
-        - Admission
-      summary: Add a new admission
-      operationId: addAdmission
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                admission_name:
-                  type: string
-                  example: "string"
-      responses:
-        200:
-          description: Admission successfully added
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id_admission:
-                    type: integer
-                    example: 10
-                  admission_name:
-                    type: string
-                    example: "string"
-        400:
-          $ref: "#/components/responses/400"
-    put:
-      tags:
-        - Admission
-      summary: Update existing admission
-      description: Update admission when `id` are provided.
-      operationId: UpdateAdmission
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Admission'
-      responses:
-        '200':
-          description: The updated admissions
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Admission'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-  '/treatment':
-    get:
-      tags:
-        - Treatment
-      summary: Get list of treatments
-      operationId: GetTreatment
-      responses:
-        '200':
-          description: The list of symptoms treated by the medicine.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Treatment'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-    post:
-      tags:
-        - Treatment
-      summary: Add a new treatment
-      operationId: addTreatment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                treatment_name:
-                  type: string
-                  example: "string"
-      responses:
-        200:
-          description: Treatment successfully added
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id_treatment:
-                    type: integer
-                    example: 10
-                  treatment_name:
-                    type: string
-                    example: "string"
-        400:
-          $ref: "#/components/responses/400"
-    put:
-      tags:
-        - Treatment
-      summary: Update existing treatment
-      description: Update treatment when `id` are provided.
-      operationId: UpdateTreatment
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Treatment'
-      responses:
-        '200':
-          description: The updated treatments
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Treatment'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-  '/compartment':
-    get:
-      tags:
-        - Compartment
-      summary: Get list of compartments
-      operationId: GetCompartments
-      responses:
-        '200':
-          description: List of compartments
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Compartment'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-    post:
-      tags:
-        - Compartment
-      summary: Add a new compartment
-      operationId: addCompartment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                compartment_name:
-                  type: string
-                  example: "C10"
-      responses:
-        200:
-          description: Compartment successfully added
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id_compartment:
-                    type: integer
-                    example: 10
-                  compartment_name:
-                    type: string
-                    example: "C10"
-        400:
-          $ref: "#/components/responses/400"
-    put:
-      tags:
-        - Compartment
-      summary: Update existing compartment
-      description: Update compartment when `id` are provided.
-      operationId: UpdateCompartment
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Compartment'
-      responses:
-        '200':
-          description: The Updated compartments
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Compartment'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '429':
-          $ref: '#/components/responses/429'
-        '500':
-          $ref: '#/components/responses/500'
-  '/compartment/{id}':
-    delete:
-      tags:
-        - Compartment
-      summary: Delete compartment by id
-      description: Remove a specific compartment from the list
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: number
-            example: 12
-          required: true
-      responses:
-        200:
-          description: Compartment deleted
-          content:
-            text/plain:
-              example: Compartment deleted successfully
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:   
-                 $ref: '#/components/responses/400'
   '/medicines':
     get:
       tags:
@@ -483,6 +194,229 @@ paths:
           content:
             text/plain:
               example: Medicine deleted successfully
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:   
+                 $ref: '#/components/responses/400'
+  '/admission':
+    get:
+      tags:
+        - Admission
+      summary: Get list of admissions
+      operationId: GetAdmission
+      responses:
+        '200':
+          description: List of admissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Admission'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Admission
+      summary: Add a new admission
+      operationId: addAdmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admission_name:
+                  type: string
+                  example: "string"
+      responses:
+        200:
+          description: Admission successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_admission:
+                    type: integer
+                    example: 10
+                  admission_name:
+                    type: string
+                    example: "string"
+        400:
+          $ref: "#/components/responses/400"
+  '/treatment':
+    get:
+      tags:
+        - Treatment
+      summary: Get list of treatments
+      operationId: GetTreatment
+      responses:
+        '200':
+          description: The list of symptoms treated by the medicine.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Treatment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Treatment
+      summary: Add a new treatment
+      operationId: addTreatment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                treatment_name:
+                  type: string
+                  example: "string"
+      responses:
+        200:
+          description: Treatment successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_treatment:
+                    type: integer
+                    example: 10
+                  treatment_name:
+                    type: string
+                    example: "string"
+        400:
+          $ref: "#/components/responses/400"
+  '/compartment':
+    get:
+      tags:
+        - Compartment
+      summary: Get list of compartments
+      operationId: GetCompartments
+      responses:
+        '200':
+          description: List of compartments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compartment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Compartment
+      summary: Add a new compartment
+      operationId: addCompartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                compartment_name:
+                  type: string
+                  example: "C10"
+      responses:
+        200:
+          description: Compartment successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_compartment:
+                    type: integer
+                    example: 10
+                  compartment_name:
+                    type: string
+                    example: "C10"
+        400:
+          $ref: "#/components/responses/400"
+    put:
+      tags:
+        - Compartment
+      summary: Update existing compartment
+      description: Update compartment when `id` are provided.
+      operationId: UpdateCompartment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Compartment'
+      responses:
+        '200':
+          description: The Updated compartments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Compartment'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '429':
+          $ref: '#/components/responses/429'
+        '500':
+          $ref: '#/components/responses/500'
+  '/compartment/{id}':
+    delete:
+      tags:
+        - Compartment
+      summary: Delete compartment by id
+      description: Remove a specific compartment from the list
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: number
+            example: 12
+          required: true
+      responses:
+        200:
+          description: Compartment deleted
+          content:
+            text/plain:
+              example: Compartment deleted successfully
         400:
           description: Bad request
           content:
@@ -694,6 +628,20 @@ components:
         compartment_name:
           type: string
           example: "C1"
+    History:
+      properties:
+        id_history:
+          type: number
+          example: 1
+        description:
+          type: string
+          example: "Replenishment"
+        operation:
+          type: string
+          example: "Adding"
+        operationDateTime:
+          type: string
+          example: "2022/09/03 11:00"
     Exception:
       type: object
       properties:
