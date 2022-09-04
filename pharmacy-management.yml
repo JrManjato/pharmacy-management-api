@@ -89,28 +89,23 @@ paths:
       summary: Add a new medicine
       operationId: addMedicine
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                medicine_name:
-                  type: string
-                  example: "string"
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateMedicine'
       responses:
         200:
           description: Medicine successfully added
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id_medicine:
-                    type: integer
-                    example: 110
-                  medicine_name:
-                    type: string
-                    example: "string"
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Medicine'
         400:
           $ref: "#/components/responses/400"
     put:
@@ -589,21 +584,18 @@ components:
           example: 500
     CreateMedicine:
       properties:
-        id_medicine:
-          type: number
-          example: 1
         medicine_name:
           type: string
           example: "azithromycine"
-        id_admission:
-          type: number
-          example: 1
+        treatmentName:
+          type: array
+          example: ["Maux de tête", "Fièvre"]
+        admissionName:
+          type: string
+          example: "oral"
         quantity:
           type: number
           example: 500
-        id_treatment:
-          type: number
-          example: 1
     Treatment:
       properties:
         id_treatment:
