@@ -1,25 +1,23 @@
 package com.example.hackaton_api.Services;
 
-import com.example.hackaton_api.Models.*;
-import com.example.hackaton_api.Repositories.BookRepository;
+import com.example.hackaton_api.Models.Admission;
+import com.example.hackaton_api.Models.Compartment;
+import com.example.hackaton_api.Models.CreateMedicine;
+import com.example.hackaton_api.Models.History;
+import com.example.hackaton_api.Models.Medicine;
+import com.example.hackaton_api.Models.Treatment;
+import com.example.hackaton_api.Models.UpdateMedicine;
 import com.example.hackaton_api.Repositories.MedicineRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
-import static java.util.Comparator.comparing;
 
 @Service
 @AllArgsConstructor
@@ -39,43 +37,63 @@ public class MedicineService {
 
   public List<Medicine> getMedicines(int page, int pageSize) {
     Pageable pageable = PageRequest.of(page - 1, pageSize);
-    List<Medicine> list = medicineRepository.findAll(pageable)
+    return medicineRepository.findAll(pageable)
             .stream().toList();
-    return list;
   }
 
-  public Medicine addMedicine(Medicine medicine, List<String> treatmentNameList, String admissionName, String compartmentName) {
-    Admission admission = admissionService.getAdmissionByName(admissionName);
-    Compartment compartment = compartmentService.getCompartmentByName(compartmentName);
+  public List<Medicine> getMedicinesByQuantityAndThreshold(int threshold, int page, int pageSize) {
+    Pageable pageable = PageRequest.of(page - 1, pageSize);
+    return medicineRepository.findAllByQuantityAndQuantityIsLessThanOrEqualToThreshold(threshold, pageable)
+            .stream().toList();
+  }
+
+  public Medicine addMedicine(CreateMedicine createMedicine) {
+    Medicine newMedicine = new Medicine();
+
+    Admission admission = admissionService.getAdmissionByName(createMedicine.getAdmissionName());
+    Compartment compartment = compartmentService.getCompartmentByName(createMedicine.getCompartmentName());
     List<Treatment> treatmentList = new ArrayList<>();
-    for(String treatmentName: treatmentNameList){
+
+    for (String treatmentName : createMedicine.getTreatmentName()) {
       Treatment treatment = treatmentService.getTreatmentByName(treatmentName);
       treatmentList.add(treatment);
     }
 
-    medicine.setAdmission(admission);
-    medicine.setCompartment(compartment);
-    medicine.setTreatmentList(treatmentList);
+    newMedicine.setMedicineName(createMedicine.getMedicineName());
+    newMedicine.setAdmission(admission);
+    newMedicine.setCompartment(compartment);
+    newMedicine.setTreatmentList(treatmentList);
 
-    return medicineRepository.save(medicine);
+    return medicineRepository.save(newMedicine);
   }
 
-  public Medicine modifyMedicine(Medicine medicine) {
-    if(medicineRepository.existsById(medicine.getIdMedicine())){
-      Medicine newMedicine = medicineRepository.findById(medicine.getIdMedicine()).get();
-      newMedicine.setMedicineName(medicine.getMedicineName());
-      newMedicine.setTreatmentList(medicine.getTreatmentList());
-      newMedicine.setAdmission(medicine.getAdmission());
-      newMedicine.setCompartment(medicine.getCompartment());
-      return medicineRepository.save(newMedicine);
+  public Medicine modifyMedicine(UpdateMedicine currentMedicine) {
+
+    Admission admission = admissionService.getAdmissionByName(currentMedicine.getAdmissionName());
+    Compartment compartment = compartmentService.getCompartmentByName(currentMedicine.getCompartmentName());
+    List<Treatment> treatmentList = new ArrayList<>();
+
+    for (String treatmentName : currentMedicine.getTreatmentName()) {
+      Treatment treatment = treatmentService.getTreatmentByName(treatmentName);
+      treatmentList.add(treatment);
     }
-    else{
+
+    if (medicineRepository.existsById(currentMedicine.getIdMedicine())) {
+      Medicine newMedicine = medicineRepository.findById(currentMedicine.getIdMedicine()).get();
+
+      newMedicine.setMedicineName(currentMedicine.getMedicineName());
+      newMedicine.setTreatmentList(treatmentList);
+      newMedicine.setAdmission(admission);
+      newMedicine.setCompartment(compartment);
+
+      return medicineRepository.save(newMedicine);
+    } else {
       return null;
     }
   }
 
   public Medicine replenishMedicine(int idMedicine, History history) {
-    if(medicineRepository.existsById(idMedicine) && history.getQuantity() > 0){
+    if (medicineRepository.existsById(idMedicine) && history.getQuantity() > 0) {
       Medicine currentMedicine = medicineRepository.findById(idMedicine).get();
 
       Instant instant = Instant.now();
@@ -85,34 +103,25 @@ public class MedicineService {
 
       currentMedicine.setQuantity(currentMedicine.getQuantity() + history.getQuantity());
       return medicineRepository.save(currentMedicine);
-    }
-    else{
+    } else {
       return null;
     }
   }
 
   public Medicine consumeMedicine(int idMedicine, History history) {
     Medicine currentMedicine = medicineRepository.findById(idMedicine).get();
-    if(medicineRepository.existsById(idMedicine) && currentMedicine.getQuantity() > history.getQuantity()){
+    if (medicineRepository.existsById(idMedicine) && currentMedicine.getQuantity() >= history.getQuantity()) {
 
-        Instant instant = Instant.now();
-        history.setOperationDateTime(instant);
-        history.setMedicine(currentMedicine);
-        historyService.addHistory(history);
+      Instant instant = Instant.now();
+      history.setOperationDateTime(instant);
+      history.setMedicine(currentMedicine);
+      historyService.addHistory(history);
 
-        currentMedicine.setQuantity(currentMedicine.getQuantity() - history.getQuantity());
-        return medicineRepository.save(currentMedicine);
+      currentMedicine.setQuantity(currentMedicine.getQuantity() - history.getQuantity());
+      return medicineRepository.save(currentMedicine);
 
-    }
-    else{
+    } else {
       return null;
     }
   }
 }
-
-// RequestBody for replenishment or consumption
-//{
-//        "description": "Livraison venant du port de Toamasina",
-//        "operation": "réapprovisionnement",
-//        "quantity": 2000
-//}
