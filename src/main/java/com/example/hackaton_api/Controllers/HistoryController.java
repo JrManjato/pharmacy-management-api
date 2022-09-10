@@ -30,6 +30,10 @@ public class HistoryController {
     return service.getHistories(page, pageSize);
   }
 
+  @PostMapping("/history")
+  public History addHistory(@RequestBody History history) {
+    return service.addHistory(history);
+  }
   @DeleteMapping("/history/{id}")
   public void deleteHistory(@PathVariable int id){
      service.delete(id);

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 
@@ -29,6 +30,11 @@ public class HistoryService {
             .stream().toList();
   }
 
+  public History addHistory(History history) {
+    Instant instant = Instant.now();
+    history.setOperationDateTime(instant);
+    return historyRepository.save(history);
+  }
   public void delete(int id){
     historyRepository.deleteById(id);
   }

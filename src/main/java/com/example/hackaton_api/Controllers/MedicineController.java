@@ -1,6 +1,7 @@
 package com.example.hackaton_api.Controllers;
 
 import com.example.hackaton_api.Models.Book;
+import com.example.hackaton_api.Models.History;
 import com.example.hackaton_api.Models.Medicine;
 import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Services.BookService;
@@ -34,6 +35,16 @@ public class MedicineController {
   public Medicine addMedicine(@PathVariable List<String> treatmentNameList, @PathVariable String admissionName, @PathVariable String compartmentName, @RequestBody Medicine medicine) {
 
     return service.addMedicine(medicine, treatmentNameList, admissionName, compartmentName);
+  }
+
+  @PutMapping("/medicine/replenishement/{idMedicine}")
+  public Medicine replenishMedicine(@PathVariable int idMedicine, @RequestBody History history) {
+    return service.replenishMedicine(idMedicine, history);
+  }
+
+  @PutMapping("/medicine/consumption/{idMedicine}")
+  public Medicine consumeMedicine(@PathVariable int idMedicine, @RequestBody History history) {
+    return service.consumeMedicine(idMedicine, history);
   }
 
 }

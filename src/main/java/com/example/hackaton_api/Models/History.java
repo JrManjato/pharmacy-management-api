@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +28,10 @@ public class History implements Serializable {
   private String operation;
 
   @Column(name = "operationDateTime")
-  private Date operationDateTime;
+  private Instant operationDateTime;
 
   @Column(name = "quantity")
-  private Date quantity;
+  private int quantity;
 
   @ManyToOne
   private Medicine medicine;
