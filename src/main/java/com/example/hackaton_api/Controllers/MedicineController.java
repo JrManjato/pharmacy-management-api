@@ -41,6 +41,22 @@ public class MedicineController {
     return service.getMedicinesByQuantityAndThreshold(threshold, page, pageSize);
   }
 
+  @GetMapping("/medicines/compartment/{compartmentName}")
+  public List<Medicine> getMedicinesByIdCompartment(@RequestParam(name = "pageNumber") int page,
+                                                     @RequestParam(name = "pageSize") int pageSize,
+                                                     @PathVariable String compartmentName) {
+    return service.getMedicinesByCompartmentName(compartmentName, page, pageSize);
+  }
+
+  @GetMapping("/medicines/filter")
+  public List<Medicine> getMedicinesByTreatmentName(
+          @RequestParam(name = "treatmentName", required = false) String treatmentName,
+          @RequestParam(name = "admissionName", required = false) String admissionName,
+          @RequestParam(name = "pageNumber") int page,
+          @RequestParam(name = "pageSize") int pageSize
+          ) {
+    return service.getMedicinesByTreatmentName(treatmentName, admissionName, page, pageSize);
+  }
   @PostMapping("/create-medicine")
   public Medicine addMedicine(@RequestBody CreateMedicine createMedicine) {
     return service.addMedicine(createMedicine);

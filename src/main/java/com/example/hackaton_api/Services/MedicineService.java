@@ -47,6 +47,28 @@ public class MedicineService {
             .stream().toList();
   }
 
+  public List<Medicine> getMedicinesByCompartmentName(String compartmentName, int page, int pageSize) {
+    Pageable pageable = PageRequest.of(page - 1, pageSize);
+    return medicineRepository.findAllByCompartmentName(compartmentName, pageable)
+            .stream().toList();
+  }
+
+  public List<Medicine> getMedicinesByTreatmentName(String treatmentName, String admissionName, int page, int pageSize) {
+    Pageable pageable = PageRequest.of(page - 1, pageSize);
+    if (admissionName == null && treatmentName != null) {
+      return medicineRepository.findByTreatmentName(treatmentName, pageable)
+              .stream().toList();
+    } else if (admissionName != null && treatmentName == null) {
+      return medicineRepository.findByAdmissionName(admissionName, pageable)
+              .stream().toList();
+    }else if (admissionName != null && treatmentName != null) {
+      return medicineRepository.findByAdmissionNameAndTreatmentName(admissionName, treatmentName, pageable)
+              .stream().toList();
+    }
+    return medicineRepository.findAll(pageable)
+            .stream().toList();
+  }
+
   public Medicine addMedicine(CreateMedicine createMedicine) {
     Medicine newMedicine = new Medicine();
 
