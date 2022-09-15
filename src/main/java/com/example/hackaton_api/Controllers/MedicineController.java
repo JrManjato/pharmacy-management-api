@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +28,6 @@ import java.util.List;
 public class MedicineController {
 
   private MedicineService service;
-
-  @GetMapping("/medicines")
-  public List<Medicine> getAllMedicines(@RequestParam(name = "pageNumber") int page,
-                                        @RequestParam(name = "pageSize") int pageSize) {
-    return service.getMedicines(page, pageSize);
-  }
-
   @GetMapping("/medicines/{threshold}")
   public List<Medicine> getMedicinesByGivenThreshold(@RequestParam(name = "pageNumber") int page,
                                                      @RequestParam(name = "pageSize") int pageSize,
@@ -48,7 +42,7 @@ public class MedicineController {
     return service.getMedicinesByCompartmentName(compartmentName, page, pageSize);
   }
 
-  @GetMapping("/medicines/filter")
+  @GetMapping("/medicines")
   public List<Medicine> getMedicinesByTreatmentName(
           @RequestParam(name = "treatmentName", required = false) String treatmentName,
           @RequestParam(name = "admissionName", required = false) String admissionName,
@@ -75,6 +69,16 @@ public class MedicineController {
   @PutMapping("/medicine/consumption/{idMedicine}")
   public Medicine consumeMedicine(@PathVariable int idMedicine, @RequestBody History history) {
     return service.consumeMedicine(idMedicine, history);
+  }
+
+  @DeleteMapping("/medicine/{id}")
+  public void deleteMedicine(@PathVariable int id){
+    service.delete(id);
+  }
+
+  @DeleteMapping("/medicines/{ids}")
+  public void deleteMedicines(@PathVariable List<Integer> ids){
+    service.multipleDelete(ids);
   }
 
 }

@@ -146,4 +146,14 @@ public class MedicineService {
       return null;
     }
   }
+
+  public void delete(int id){
+    medicineRepository.deleteById(id);
+  }
+
+  public void multipleDelete(List<Integer> ids){
+    for (int i = 0; i < ids.size(); i++) {
+      medicineRepository.deleteById(ids.get(i));
+    }
+  }
 }

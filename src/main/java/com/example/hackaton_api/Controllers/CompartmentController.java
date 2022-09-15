@@ -1,14 +1,10 @@
 package com.example.hackaton_api.Controllers;
 
-import com.example.hackaton_api.Models.Book;
 import com.example.hackaton_api.Models.Compartment;
-import com.example.hackaton_api.Services.BookService;
 import com.example.hackaton_api.Services.CompartmentService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,5 +40,3 @@ public class CompartmentController {
   }
 
 }
-
-//http://localhost:8080/compartment?pageNumber=1&pageSize=10
