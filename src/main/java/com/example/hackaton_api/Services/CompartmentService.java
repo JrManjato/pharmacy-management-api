@@ -1,15 +1,11 @@
 package com.example.hackaton_api.Services;
 
-import com.example.hackaton_api.Models.Admission;
-import com.example.hackaton_api.Models.Book;
-import com.example.hackaton_api.Models.Category;
 import com.example.hackaton_api.Models.Compartment;
+import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Repositories.CompartmentRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +25,7 @@ public class CompartmentService {
     return compartmentRepository.findAll(pageable)
             .stream().toList();
   }
-
+  
   public Compartment addCompartment(Compartment compartment) {
     return compartmentRepository.save(compartment);
   }
@@ -46,5 +42,9 @@ public class CompartmentService {
 
   public Compartment getCompartmentByName(String name) {
     return compartmentRepository.findByCompartmentName(name);
+  }
+
+  public List<Compartment> addCompartments(List<Compartment> CompartmentsList) {
+    return compartmentRepository.saveAll(CompartmentsList);
   }
 }

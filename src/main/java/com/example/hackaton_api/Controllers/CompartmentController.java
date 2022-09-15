@@ -1,14 +1,11 @@
 package com.example.hackaton_api.Controllers;
 
-import com.example.hackaton_api.Models.Book;
 import com.example.hackaton_api.Models.Compartment;
-import com.example.hackaton_api.Services.BookService;
+import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Services.CompartmentService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +29,11 @@ public class CompartmentController {
   public Compartment addCompartment(@RequestBody Compartment compartment){
     return service.addCompartment(compartment);
   }
+  // The post below is made to insert the starting data.
+  @PostMapping("/create-compartments")
+  public List<Compartment> addCompartments(@RequestBody List<Compartment> compartmentList) {
+    return service.addCompartments(compartmentList);
+  }
 
   @DeleteMapping("/compartment/{id}")
   public void deleteCompartment(@PathVariable int id){
@@ -44,5 +46,3 @@ public class CompartmentController {
   }
 
 }
-
-//http://localhost:8080/compartment?pageNumber=1&pageSize=10
