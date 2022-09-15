@@ -1,5 +1,6 @@
 package com.example.hackaton_api.Services;
 
+import com.example.hackaton_api.Models.Admission;
 import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Repositories.TreatmentRepository;
 import lombok.AllArgsConstructor;
@@ -38,5 +39,9 @@ public class TreatmentService {
 
   public Treatment getTreatmentByName(String name) {
     return treatmentRepository.findByTreatmentName(name);
+  }
+
+  public List<Treatment> addTreatments(List<Treatment> TreatmentsList) {
+    return treatmentRepository.saveAll(TreatmentsList);
   }
 }

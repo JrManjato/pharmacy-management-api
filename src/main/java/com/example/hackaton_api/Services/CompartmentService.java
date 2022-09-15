@@ -1,6 +1,7 @@
 package com.example.hackaton_api.Services;
 
 import com.example.hackaton_api.Models.Compartment;
+import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Repositories.CompartmentRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,5 +42,9 @@ public class CompartmentService {
 
   public Compartment getCompartmentByName(String name) {
     return compartmentRepository.findByCompartmentName(name);
+  }
+
+  public List<Compartment> addCompartments(List<Compartment> CompartmentsList) {
+    return compartmentRepository.saveAll(CompartmentsList);
   }
 }

@@ -1,5 +1,6 @@
 package com.example.hackaton_api.Controllers;
 
+import com.example.hackaton_api.Models.Medicine;
 import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Services.TreatmentService;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,12 @@ public class TreatmentController {
   @PostMapping("/treatment")
   public Treatment addTreatment(@RequestBody Treatment treatment) {
     return service.addTreatment(treatment);
+  }
+
+  // The post below is made to insert the starting data.
+  @PostMapping("/create-treatments")
+  public List<Treatment> addTreatments(@RequestBody List<Treatment> TreatmentsList) {
+    return service.addTreatments(TreatmentsList);
   }
 
 }

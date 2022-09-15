@@ -1,6 +1,7 @@
 package com.example.hackaton_api.Controllers;
 
 import com.example.hackaton_api.Models.Admission;
+import com.example.hackaton_api.Models.Medicine;
 import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Services.AdmissionService;
 import com.example.hackaton_api.Services.TreatmentService;
@@ -25,4 +26,9 @@ public class AdmissionController {
     return service.getAdmissions();
   }
 
+  // The post below is made to insert the starting data.
+  @PostMapping("/create-admissions")
+  public List<Admission> addAdmissions(@RequestBody List<Admission> AdmissionsList) {
+    return service.addAdmissions(AdmissionsList);
+  }
 }

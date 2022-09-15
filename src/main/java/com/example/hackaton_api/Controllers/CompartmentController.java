@@ -1,6 +1,7 @@
 package com.example.hackaton_api.Controllers;
 
 import com.example.hackaton_api.Models.Compartment;
+import com.example.hackaton_api.Models.Treatment;
 import com.example.hackaton_api.Services.CompartmentService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,11 @@ public class CompartmentController {
   @PostMapping("/compartment")
   public Compartment addCompartment(@RequestBody Compartment compartment){
     return service.addCompartment(compartment);
+  }
+  // The post below is made to insert the starting data.
+  @PostMapping("/create-compartments")
+  public List<Compartment> addCompartments(@RequestBody List<Compartment> compartmentList) {
+    return service.addCompartments(compartmentList);
   }
 
   @DeleteMapping("/compartment/{id}")

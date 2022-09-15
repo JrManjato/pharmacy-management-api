@@ -56,6 +56,12 @@ public class MedicineController {
     return service.addMedicine(createMedicine);
   }
 
+  // The post below is made to insert the starting data.
+  @PostMapping("/create-medicines")
+  public List<Medicine> addMedicine(@RequestBody List<Medicine> MedicinesList) {
+    return service.addMedicines(MedicinesList);
+  }
+
   @PutMapping("/modify-medicine")
   public Medicine modifyMedicine(@RequestBody UpdateMedicine currentMedicine) {
     return service.modifyMedicine(currentMedicine);

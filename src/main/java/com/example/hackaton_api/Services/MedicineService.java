@@ -126,7 +126,7 @@ public class MedicineService {
       currentMedicine.setQuantity(currentMedicine.getQuantity() + history.getQuantity());
       return medicineRepository.save(currentMedicine);
     } else {
-      return null;
+      throw new RuntimeException();
     }
   }
 
@@ -143,7 +143,7 @@ public class MedicineService {
       return medicineRepository.save(currentMedicine);
 
     } else {
-      return null;
+      throw new RuntimeException();
     }
   }
 
@@ -155,5 +155,9 @@ public class MedicineService {
     for (int i = 0; i < ids.size(); i++) {
       medicineRepository.deleteById(ids.get(i));
     }
+  }
+
+  public List<Medicine> addMedicines(List<Medicine> MedicinesList) {
+    return medicineRepository.saveAll(MedicinesList);
   }
 }
